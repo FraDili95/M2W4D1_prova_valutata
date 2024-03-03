@@ -122,5 +122,137 @@ const jobs = [
       location: "US, NY, Saint Bonaventure",
     },
   ]
-  
-  
+
+/*FUNZIONALITA' INSERITE:
+1)ALGORITMO DI RICERCA
+2)BOTTONI PER LA CANCELLAZIONE AUTOMATICA "X"
+3)GESTIONE EVENTO "NULLA INSERITO DEI CAMPI DI TESTO"
+4)GESTIONE EVENTO "LAVORO NON TROVATO"
+5)BOTTONE CANCEL COLLEGATO ALLA LOGICA DELLA FUNZIONE DI RICERCA
+*/
+
+
+// Assegnazione dei puntatori
+const button = document.querySelector("#go");//puntatore al bottone GO
+const titleCamp = document.querySelector("#job_title");//puntatore al campo di testo TITLE
+const locationCamp = document.querySelector("#job_location");//puntatore al campo di testo LOCATION
+
+//Dischiaro funzione lettrice dei campi di testo
+function reader ( pointer ){
+  let imputValue = pointer.value;
+  return imputValue;
+}//fine reader
+
+//Dischiaro funzione cercatrice nell'array caricato come parametro
+function seeker( database ){
+  let titles= reader( titleCamp );
+  let locations= reader( locationCamp );
+  let result= [];
+  if( titles == "" && locations == "" ){
+    result.push(false); 
+    return result;
+  }else{
+      //ALGORITMO DI RICERCA
+  for (let job of database) {
+    if( job.title.toLowerCase().includes( titles ) && job.location.toLowerCase().includes( locations ) ){
+       result.push(job); 
+    }        
+   }
+   return result;
+  }
+
+}//fine seeker
+
+button.addEventListener('click', function() {
+  let buttonCancelPunct = document.querySelector(".cancel");//punto al bottone cancel
+  let errorEventPunct = document.querySelector( ".error" );//punto div error fantasma
+  let errorTwoEventPunct = document.querySelector( ".error_two" );//punto div errorTwo fantasma
+  errorEventPunct.classList.remove("event_error");//se presente rimuove la classe attiva event_error
+  errorTwoEventPunct.classList.remove("event_error");//se presente rimuove la classe attiva event_error
+  let result= [];//array contenitore eventuali riscontri
+  let count= 0;//contatore risultati
+  result = seeker(jobs);//cerca i risultati dall'imput utente
+  //----------------
+  if( result[0] == false ){//se l'utente non inserisce nulla e cerca
+     errorEventPunct.classList.add("event_error");//aggiungo una classe
+     return ;//esce dalla funzione
+  }
+  //----------------
+  count += result.length;//conteggio risultati
+  if( count === 0 ){//se i risultati sono 0
+    errorTwoEventPunct.classList.add("event_error");//aggiungo una classe
+    return ;//esce dalla funzione
+  }else if( buttonCancelPunct.classList.contains("cancel_event") === false ){//se invece trova e se non si è già cercato o schiaccito cancel
+    //----------------stampa risultato.....
+    for ( let job of result ) {
+      let newDiv = document.createElement("div");//creo un div
+      newDiv.textContent = `Job: ${job.title}, Location: ${job.location}`;//gli scrivo sopra ciò che ho salvato in result
+      newDiv.classList.add("event_result");//aggiungo la classe con il css pronto ad associarsi
+      const punctMain = document.querySelector("#principal");
+      punctMain.appendChild(newDiv);//posiziono sull'html
+    }//fine for of
+  }//fine else if
+  buttonCancelPunct.classList.add("cancel_event");//aggiungo impedimento alla ricerca
+});//fine event listener
+
+const buttonCancelPunct= document.querySelector(".cancel");
+
+buttonCancelPunct.addEventListener('click', function() {//evento del bottone cancel
+  let punctMain= document.querySelector("#principal");//punto main
+  let lastdiv = punctMain.lastElementChild;//punto ultimo elemento main
+   while( !lastdiv.classList.contains("error_two") ){//finchè l'ultimo elemento non è parte della struttura originale
+    lastdiv.parentNode.removeChild(lastdiv);//rimuove elemento puntato
+    lastdiv = punctMain.lastElementChild;//ripunta ultimo elemento di main
+   }
+   buttonCancelPunct.classList.remove("cancel_event");//toglie il blocco a continuare nell'altro event listener
+});
+
+// Assegnazione dei puntatori agli input e alle icone "x"
+const jobTitleInput = document.getElementById("job_title");
+const jobLocationInput = document.getElementById("job_location");
+const jobTitleClear = document.getElementById("job_title").nextElementSibling;
+const jobLocationClear = document.getElementById("job_location").nextElementSibling;
+
+// Aggiungi event listener per il campo di input del titolo del lavoro
+jobTitleInput.addEventListener('input', function() {
+  if (this.value.trim() !== '') {
+    jobTitleClear.style.display = 'inline';
+  } else {
+    jobTitleClear.style.display = 'none';
+  }
+});
+//----------------PARTE DEDICATA ALLA COMPARSA DELLE ICONE X------------------
+// Aggiungi event listener per il campo di input della località del lavoro
+jobLocationInput.addEventListener('input', function() {
+  if (this.value.trim() !== '') {
+    jobLocationClear.style.display = 'inline';
+  } else {
+    jobLocationClear.style.display = 'none';
+  }
+});
+
+// Aggiungi event listener per la pulizia del campo di input del titolo del lavoro
+jobTitleClear.addEventListener('click', function() {
+  jobTitleInput.value = '';
+  jobTitleClear.style.display = 'none';
+});
+
+// Aggiungi event listener per la pulizia del campo di input della località del lavoro
+jobLocationClear.addEventListener('click', function() {
+  jobLocationInput.value = '';
+  jobLocationClear.style.display = 'none';
+});
+//--------FINE-DELLA---PARTE DEDICATA ALLA COMPARSA DELLE ICONE X------------------
+//----------LOGICA DELLA CANCELLAZIONE APPLICATA ALLE X------------------
+// Seleziona le icone "x"
+const xIcons = document.querySelectorAll(".fa-solid.fa-x");
+
+// Aggiunge un evento di click ad ogni icona "x"
+xIcons.forEach((icon) => {
+  icon.addEventListener("click", function() {
+    const inputField = icon.previousElementSibling; // Seleziona l'input precedente all'icona cliccata
+    inputField.value = ""; // Cancella il testo 
+  });
+});
+
+

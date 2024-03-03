@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"><!--COLLEGAMENTO AL CSS-->
+    <title>M2W4D1 Prova di valutazione</title>
+</head>
+<body>
+    <!------------------------------------------------------------------>
+    <!--INIZIO HEADER-->
+    <header id="H_pagina">
+        <div class="logo">
+          <!--LOGO-->
+          <h1>Epijobs</h1>
+        </div>
+        <!----->
+        <nav>
+          <!--Parte di navigazione a dx-->
+          <i class="fa-solid fa-user"></i><!--log in-->
+          <!---->
+          <i class="fa-solid fa-envelope"></i><!--Bookmark-->
+          <!---->
+          <i class="fa-regular fa-bell"></i ><!--bell-->
+          <div>
+         <!--Solo estetica-->
+            Pubblica un annuncio
+          </div>
+          <div>
+            <!--button T-->
+            Log Out
+          </div>
+        </nav>
+      </header>
+    <!-------------------------------------------------------------->   
+<main id="principal">
+    <div class="error">
+      <div>!</div>
+      Per avviare una ricerca, devi inserire un titolo e una località
+    </div>
+    <div class="search_block">
+          <!--separa elementi dentro search_block-->
+         <div class="conteiner_text"><!--1-->
+            <i class="fa-solid fa-magnifying-glass"></i><!--Icona cerca-->
+            <input type="text" id="job_title" placeholder="Professione, parole chiave o azienda">  
+            <i id="x" class="fa-solid fa-x"></i>
+         </div> 
+          <!---->
+         <div class="linea-separazione"></div><!--2-->
+          <!---->
+         <div class="conteiner_text"><!--3-->
+            <i class="fa-solid fa-location-dot"></i><!--Icona posizione-->
+            <input type="text" id="job_location" placeholder="Citta, regione, stato"> 
+            <i id="x" class="fa-solid fa-x"></i>
+
+         </div>   
+         <!--bottone di ricerca-->
+         <button id="go">go!</button><!--4-->
+          <!----> 
+         <!--bottone cancella-->
+         <button class="cancel">Cancel</button><!--5-->
+          <!---->   
+    </div>
+     <!---------------------->   
+    <!--EVENTUALE RICERCA SENZA RISULTATI-->  
+    <div class="error_two">
+      <div>!</div>
+      La ricerca per Offerte di lavoro <span></span> - <span></span> non ha prodotto alcun risultato.
+      Consigli sulla ricerca:
+      <ul>
+        <li>parole chiave più generiche</li>
+        <li> Controlla la tua ortografia</li>
+        <li>Utilizza parole intere invece di abbreviazioni</li>
+      </ul>       
+    </div>
+    <!--fine-eventuale-ricerca-senza-risultati-->
+</main>   
+<!-------------------------------------------------------------->
+<!--COLLEGAMENTO FONTAWERSOME-->
+<script
+src="https://kit.fontawesome.com/e69d63c322.js"
+crossorigin="anonymous"
+></script>
+<!-------------------------------------------------------------->
+<script src="script.js"></script> <!--COLLEGAMENTO ALLO SCRIPT-->
+</body>
+</html>
