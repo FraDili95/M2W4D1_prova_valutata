@@ -177,7 +177,10 @@ main{
     font-weight: 400;
     border: 1px solid #00ff00;
     padding: 1rem;
-    border-radius: 25px;
+    border-radius: 4px;
+}
+.event_result_header{
+    background-color: #34e134;
 }
 /*--------eventuale-risultati trovati--------------*/
 .cancel{
@@ -201,3 +204,41 @@ main{
 .cancel_event{
     display: inline;
 }
+/*-----------EXTRA--------------------------------------------------------*/
+#icon_user:hover{
+  color: #34e134;
+  font-size: larger;
+}
+#extra_part{ /*DIV CONTENITORE*/
+    display: none;
+    align-items: center;
+}
+
+#extra_part.event_login{/*classe innescata dal click su icona user*/
+    display: flex;
+}
+
+#user_text_login{
+    margin: 0 0.5rem; /* margine tra i campi di input */
+    padding: 0.25rem; /* spazio attorno al testo */
+    border-radius: 4px;
+    height: 1.5rem;
+    border: 0;
+}
+/*-------button-----*/
+.login{
+    font-size: 1.3rem;
+    font-weight: 400;
+    border: 1px solid #00ff00;
+    background-color: #34e134;
+    color: white;
+    height: 2rem;
+    border-radius: 55%;
+    cursor: pointer;
+}
+.login:hover{
+    background-color: #174081;
+    border: 1px solid #272424;
+    color: azure;
+}
+/*----fine--button-----*/

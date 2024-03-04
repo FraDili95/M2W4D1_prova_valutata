@@ -129,6 +129,8 @@ const jobs = [
 3)GESTIONE EVENTO "NULLA INSERITO DEI CAMPI DI TESTO"
 4)GESTIONE EVENTO "LAVORO NON TROVATO"
 5)BOTTONE CANCEL COLLEGATO ALLA LOGICA DELLA FUNZIONE DI RICERCA
+modifica tendina verde risultati con il numero
+aggiustamento algoritmo di ricerca con minuscole anche da insertimento
 */
 
 
@@ -139,7 +141,7 @@ const locationCamp = document.querySelector("#job_location");//puntatore al camp
 
 //Dischiaro funzione lettrice dei campi di testo
 function reader ( pointer ){
-  let imputValue = pointer.value;
+  let imputValue = pointer.value.toLowerCase();//converto in minuscolo
   return imputValue;
 }//fine reader
 
@@ -184,11 +186,18 @@ button.addEventListener('click', function() {
     return ;//esce dalla funzione
   }else if( buttonCancelPunct.classList.contains("cancel_event") === false ){//se invece trova e se non si è già cercato o schiaccito cancel
     //----------------stampa risultato.....
+    //NUMERO DI RISULTATI--------------------------------
+    const punctMain = document.querySelector("#principal");//punto al main
+    let newDivNum = document.createElement("div");//creo un div num elements
+    newDivNum.classList.add("event_result");//aggiungo la classe con il css pronto ad associarsi
+    newDivNum.classList.add("event_result_header");//aggiungo la classe con il css pronto ad associarsi
+    newDivNum.textContent = `Sono stati trovati ${result.length} risultati compatibili con i criteri di ricerca...`;//inserisco la stringa
+    //POSIZIONI LAVORATIVE--------------------------------
+    punctMain.appendChild(newDivNum);//posiziono sull'html
     for ( let job of result ) {
       let newDiv = document.createElement("div");//creo un div
       newDiv.textContent = `Job: ${job.title}, Location: ${job.location}`;//gli scrivo sopra ciò che ho salvato in result
       newDiv.classList.add("event_result");//aggiungo la classe con il css pronto ad associarsi
-      const punctMain = document.querySelector("#principal");
       punctMain.appendChild(newDiv);//posiziono sull'html
     }//fine for of
   }//fine else if
@@ -210,10 +219,14 @@ buttonCancelPunct.addEventListener('click', function() {//evento del bottone can
 // Assegnazione dei puntatori agli input e alle icone "x"
 const jobTitleInput = document.getElementById("job_title");
 const jobLocationInput = document.getElementById("job_location");
+const userLoginImput = document.getElementById("user_text_login");
 const jobTitleClear = document.getElementById("job_title").nextElementSibling;
 const jobLocationClear = document.getElementById("job_location").nextElementSibling;
+const userLoginTextClear = document.getElementById("user_text_login").nextElementSibling;
 
-// Aggiungi event listener per il campo di input del titolo del lavoro
+//( uso trim() per rimuovere gli spazi bianchi all'inizio e alla fine e this per fare riferimento a cio su cui è puntato )
+//----------------PARTE DEDICATA ALLA COMPARSA DELLE ICONE X------------------
+// Aggiunge event listener per il campo di input del titolo del lavoro
 jobTitleInput.addEventListener('input', function() {
   if (this.value.trim() !== '') {
     jobTitleClear.style.display = 'inline';
@@ -221,8 +234,7 @@ jobTitleInput.addEventListener('input', function() {
     jobTitleClear.style.display = 'none';
   }
 });
-//----------------PARTE DEDICATA ALLA COMPARSA DELLE ICONE X------------------
-// Aggiungi event listener per il campo di input della località del lavoro
+// Aggiunge event listener per il campo di input della località del lavoro
 jobLocationInput.addEventListener('input', function() {
   if (this.value.trim() !== '') {
     jobLocationClear.style.display = 'inline';
@@ -230,19 +242,33 @@ jobLocationInput.addEventListener('input', function() {
     jobLocationClear.style.display = 'none';
   }
 });
-
-// Aggiungi event listener per la pulizia del campo di input del titolo del lavoro
+// Aggiunge event listener per il campo di input della località del lavoro
+userLoginImput.addEventListener('input', function() {
+  if (this.value.trim() !== '') {
+    userLoginTextClear.style.display = 'inline';
+  } else {
+    userLoginTextClear.style.display = 'none';
+  }
+});
+//----------------PARTE DEDICATA A FAR SPARIRE LA X UNA VOLTA USATA------------------
+// Aggiunge event listener per la pulizia del campo di input del titolo del lavoro
 jobTitleClear.addEventListener('click', function() {
   jobTitleInput.value = '';
   jobTitleClear.style.display = 'none';
 });
 
-// Aggiungi event listener per la pulizia del campo di input della località del lavoro
+// Aggiunge event listener per la pulizia del campo di input della località del lavoro
 jobLocationClear.addEventListener('click', function() {
   jobLocationInput.value = '';
   jobLocationClear.style.display = 'none';
 });
-//--------FINE-DELLA---PARTE DEDICATA ALLA COMPARSA DELLE ICONE X------------------
+// Aggiunge event listener per la pulizia del campo di input del login utente
+userLoginTextClear.addEventListener('click', function() {
+  userLoginImput.value = '';
+  userLoginTextClear.style.display = 'none';
+});
+
+//--------FINE-DELLA---PARTE DEDICATA ALLA COMPARSA/SCOMPARSA DELLE ICONE X------------------
 //----------LOGICA DELLA CANCELLAZIONE APPLICATA ALLE X------------------
 // Seleziona le icone "x"
 const xIcons = document.querySelectorAll(".fa-solid.fa-x");
@@ -255,4 +281,21 @@ xIcons.forEach((icon) => {
   });
 });
 
+//----------------------------------EXTRA--------------------------------------------------------------------------------------------------------------------
+
+const users = { //utenti registrati
+  name: "Cristina Niamkevich",
+  name: "Francesco Di liberto",
+  name: "Abdul Mohamed",
+  name: "Simone Di meglio",
+  name: "Ermenegildo Zegna",
+  name: "Giorgio Armani",
+};
+
+const loginIcons = document.querySelector("#icon_user");
+const divFatherLoginOne = document.querySelector("#extra_part");
+
+loginIcons.addEventListener("click", function(){
+    divFatherLoginOne.classList.add("event_login");
+});
 
